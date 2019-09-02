@@ -15,8 +15,8 @@ Put tool-youtube-dl , youtube-dl , ffmpeg in the same directory.
 
 ## How to use
 
-### Reading from file 
-  1. Put URL in odd line , File Name in even line 
+  ### Reading from file 
+    1. Put URL in odd line , File Name in even line 
 
 
 ## Screenshots
