@@ -5,7 +5,7 @@
 tool-youtube-dl is a tool making [youtube-dl](https://github.com/ytdl-org/youtube-dl) easier to use. 
 
 ## Features
-1. Support read from file 
+1. Support reading from file 
 
 
 
