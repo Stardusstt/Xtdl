@@ -1,5 +1,6 @@
 # tool-youtube-dl
-[Lastest Release](https://img.shields.io/github/v/release/stardusstt/tool-youtube-dl?include_prereleases)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/stardusstt/tool-youtube-dl?include_prereleases)
+
 ## Introduction
 tool-youtube-dl is a tool making [youtube-dl](https://github.com/ytdl-org/youtube-dl) easier to use. 
 
