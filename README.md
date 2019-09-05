@@ -7,7 +7,8 @@ tool-youtube-dl is a tool making [youtube-dl](https://github.com/ytdl-org/youtub
 ## Features
 * Support reading from file 
 
-
+## Support Format
+* wav
 
 ## Installation
 Put tool-youtube-dl , youtube-dl , ffmpeg in the same directory.
