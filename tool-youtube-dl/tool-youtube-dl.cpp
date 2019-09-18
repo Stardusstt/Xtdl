@@ -153,7 +153,7 @@ int main()
 
 	system( "cls" );
 	wcout << " ver 0.2.0" << endl ;
-	wcout << endl << " (1) Single download     (2) Reading from file  : ";
+	wcout << endl << " (1) Single download     (2) Reading from txt  : ";
 	wcin >> mod;
 	wcout << endl;
 
@@ -163,7 +163,7 @@ int main()
 		goto singledownload ;
 		break ;
 	case 2 :
-		goto readingfromfile ;
+		goto readingfromtxt ;
 		break ;
 	default:
 		goto start ;
@@ -211,7 +211,7 @@ int main()
 
 
 	//
-	readingfromfile:
+	readingfromtxt :
 
 	system( "cls" );
 	url = L"";
@@ -273,7 +273,7 @@ int main()
 	wcout << endl << endl << "All Finshed" << endl << endl ;
 	system( "pause" );
 
-	goto readingfromfile ;
+	goto readingfromtxt ;
 	//
 
 }
