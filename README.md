@@ -5,7 +5,7 @@
 tool-youtube-dl is a tool making [youtube-dl](https://github.com/ytdl-org/youtube-dl) easier to use. 
 
 ## Features
-* Support reading from file 
+* Support reading from txt 
 
 ## Support Format
 * wav
@@ -16,7 +16,7 @@ Put tool-youtube-dl , youtube-dl , ffmpeg in the same directory.
 
 ## How to use
 
-### Reading from file 
+### Reading from txt ( UTF-16LE )  
 1. Put URL in odd line , File Name in even line 
 
 
