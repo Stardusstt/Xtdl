@@ -1,4 +1,4 @@
-# tool-youtube-dl
+# Xtdl
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/stardusstt/tool-youtube-dl?include_prereleases)](https://github.com/Stardusstt/tool-youtube-dl/releases)
 
 ## Introduction
