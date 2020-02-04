@@ -2,7 +2,7 @@
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/stardusstt/tool-youtube-dl?include_prereleases)](https://github.com/Stardusstt/tool-youtube-dl/releases)
 
 ## Introduction
-Xtdl is a tool based on [youtube-dl](https://github.com/ytdl-org/youtube-dl) . 
+Xtdl is a download tool based on [youtube-dl](https://github.com/ytdl-org/youtube-dl) . 
 
 ## Features
 * Support reading from txt 
