@@ -2,7 +2,7 @@
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/stardusstt/tool-youtube-dl?include_prereleases)](https://github.com/Stardusstt/tool-youtube-dl/releases)
 
 ## Introduction
-tool-youtube-dl is a tool making [youtube-dl](https://github.com/ytdl-org/youtube-dl) easier to use. 
+Xtdl is a tool based on [youtube-dl](https://github.com/ytdl-org/youtube-dl) . 
 
 ## Features
 * Support reading from txt 
@@ -11,7 +11,7 @@ tool-youtube-dl is a tool making [youtube-dl](https://github.com/ytdl-org/youtub
 * wav
 
 ## Installation
-Put tool-youtube-dl , youtube-dl , ffmpeg in the same directory.
+Put Xtdl , youtube-dl , ffmpeg in the same directory.
 
 
 ## How to use
