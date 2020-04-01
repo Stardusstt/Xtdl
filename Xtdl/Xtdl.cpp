@@ -31,9 +31,11 @@ private:
 
 Update::Update()
 {
+	/*
 	xtdl_version = "";
 	youtube_dl_version = "";
 	ffmpeg_version = "";
+	*/
 }
 
 Update::~Update()
@@ -98,35 +100,37 @@ void Update::GetVersion()
 }
 
 //
-class MyClass
+class Converter
 {
 public:
-	MyClass();
-	~MyClass();
+
+	Converter();
+	~Converter();
+
+	void GetState( string s_in );
+	void CommandConvert( string command_in , string filename_in );
+
+	string state , speed , eta ;
 
 private:
 
+	string input ;
+
 };
 
-MyClass::MyClass()
+Converter::Converter()
 {
 
 }
 
-MyClass::~MyClass()
+Converter::~Converter()
 {
 }
 
-
-
-
-
-
-
-
-//
-void GetState( string s_in , string &state , string &speed , string &eta )
+void Converter::GetState( string s_in )
 {
+	
+	input = s_in ;
 
 	smatch result;
 	regex regex_youtube( "youtube" );
@@ -139,39 +143,39 @@ void GetState( string s_in , string &state , string &speed , string &eta )
 
 
 	// begin
-	if ( regex_search( s_in , result , regex_youtube ) )
+	if ( regex_search( input , result , regex_youtube ) )
 	{
-		state = s_in;
+		state = input;
 	}
 
-	if ( regex_search( s_in , result , regex_download ) )
+	if ( regex_search( input , result , regex_download ) )
 	{
 
-		if ( regex_search( s_in , result , regex_state ) )
+		if ( regex_search( input , result , regex_state ) )
 		{
 			state = result[0];
 		}
 
-		if ( regex_search( s_in , result , regex_speed ) )
+		if ( regex_search( input , result , regex_speed ) )
 		{
 			speed = result[0];
 		}
 
-		if ( regex_search( s_in , result , regex_eta ) )
+		if ( regex_search( input , result , regex_eta ) )
 		{
 			state = result[2];
 		}
 
 	}
 
-	if ( regex_search( s_in , result , regex_ffmpeg ) )
+	if ( regex_search( input , result , regex_ffmpeg ) )
 	{
 		state = "Converting";
 		speed = "";
 		eta = "";
 	}
 
-	if ( regex_search( s_in , result , regex_deleting ) )
+	if ( regex_search( input , result , regex_deleting ) )
 	{
 		state = "Deleting temp";
 		speed = "";
@@ -181,7 +185,7 @@ void GetState( string s_in , string &state , string &speed , string &eta )
 
 }
 
-void CommandConvert( string command , string filename )
+void Converter::CommandConvert( string command_in , string filename_in )
 {
 
 	using namespace boost::process ;
@@ -191,18 +195,18 @@ void CommandConvert( string command , string filename )
 	//
 	//boost::filesystem::path output = "output.txt";
 	//
-	child ytdl_shell( command , std_out > output );
+	child ytdl_shell( command_in , std_out > output );
 
-	string state , speed , eta , s_in ;
+	string shell_string ;
 
-	while ( getline( output , s_in ) ) // get word from output to s_in
+	while ( getline( output , shell_string ) ) // get word from output to shell_string
 	{
 
-		GetState( s_in , state , speed , eta );
+		GetState( shell_string );
 
 		cout << "                                                                                  ";
 		cout << "\r";
-		cout << " " << filename << ".wav" << setw( 16 )
+		cout << " " << filename_in << ".wav" << setw( 16 )
 			<< state << setw( 15 )
 			<< speed << setw( 10 )
 			<< eta ;
@@ -213,13 +217,14 @@ void CommandConvert( string command , string filename )
 	state = "Finished";
 	cout << "                                                                                 ";
 	cout << "\r";
-	cout << " " << filename << ".wav" << setw( 16 )
+	cout << " " << filename_in << ".wav" << setw( 16 )
 		<< state << setw( 15 )
 		<< speed << setw( 10 )
 		<< eta ;
 
 }
 
+//
 
 
 int main()
@@ -229,9 +234,8 @@ int main()
 	string filename , url , command_final , txt_name , xtdl , youtube_dl , ffmpeg ;
 	stringstream command;
 	vector<thread> download;
-	//
 	Update update_1 ;
-
+	Converter converter_1 ;
 
 
 
@@ -245,10 +249,10 @@ Start:
 
 
 	cout << endl << " (1) Single download "
-		<< endl << " (2) Reading from txt "
-		<< endl << " (3) Update youtube-dl "
-		<< endl
-		<< endl << " Choose the number : " ;
+		 << endl << " (2) Reading from txt "
+		 << endl << " (3) Update youtube-dl "
+		 << endl
+		 << endl << " Choose the number : " ;
 
 	cin >> mod;
 	cout << endl;
@@ -288,14 +292,14 @@ SingleDownload:
 
 	// splice command
 	command << "youtube-dl  --newline  -f  bestaudio  --extract-audio  --audio-format wav  --audio-quality 0  -o  \""
-		<< filename
-		<< ".%(ext)s\"  "
-		<< url;
+		    << filename
+		    << ".%(ext)s\"  "
+		    << url;
 	getline( command , command_final );
 
-	download.push_back( thread( CommandConvert , command_final , filename ) ) ; // create a thread for CommandConvert
+	download.emplace_back( thread( &Converter::CommandConvert , &converter_1 , command_final , filename ) ) ; // create a thread for CommandConvert
 	download[download.size() - 1].join() ;
-
+	
 	cout << endl << endl ;
 	system( "pause" );
 
