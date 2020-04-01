@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <string>
@@ -12,7 +12,119 @@
 
 using namespace std ;
 
+//
+class Update
+{
+public:
+	
+	Update();
+	~Update();
+	
+	void GetVersion();
+	void UpdateYoutube_dl();
 
+private:
+
+	string xtdl_version , youtube_dl_version , ffmpeg_version ;
+
+};
+
+Update::Update()
+{
+	xtdl_version = "";
+	youtube_dl_version = "";
+	ffmpeg_version = "";
+}
+
+Update::~Update()
+{
+}
+
+void Update::UpdateYoutube_dl() 
+{
+
+	using namespace boost::process ;
+
+
+	ipstream output ;
+
+	child youtube_dl_shell( "youtube-dl --update" , std_out > output );
+
+	string s_out ;
+
+	while ( getline( output , s_out ) ) // get word from output to s_out until eof
+	{
+
+		cout << s_out << endl ;
+
+	}
+
+	cout << endl;
+	system( "pause" );
+
+}
+
+void Update::GetVersion()
+{
+
+	using namespace boost::process ;
+
+	//  xtdl
+	xtdl_version = "2020.4.2" ;
+
+	cout << "Xtdl : " << xtdl_version ;
+	cout << endl;
+
+	//  youtube-dl
+	ipstream output_youtube_dl;
+
+	child youtube_dl_shell( "youtube-dl --version" , std_out > output_youtube_dl );
+
+	getline( output_youtube_dl , youtube_dl_version );
+
+	cout << "youtube-dl : " << youtube_dl_version ;
+	cout << endl;
+
+	//  ffmpeg
+	ipstream output_ffmpeg;
+
+	child ffmpeg_shell( "ffmpeg -version" , std_out > output_ffmpeg );
+
+	getline( output_ffmpeg , ffmpeg_version );
+
+	cout << "ffmpeg : " << ffmpeg_version ;
+	cout << endl;
+	
+}
+
+//
+class MyClass
+{
+public:
+	MyClass();
+	~MyClass();
+
+private:
+
+};
+
+MyClass::MyClass()
+{
+
+}
+
+MyClass::~MyClass()
+{
+}
+
+
+
+
+
+
+
+
+//
 void GetState( string s_in , string &state , string &speed , string &eta )
 {
 
@@ -71,9 +183,9 @@ void GetState( string s_in , string &state , string &speed , string &eta )
 
 void CommandConvert( string command , string filename )
 {
-	
+
 	using namespace boost::process ;
-	
+
 
 	ipstream output;
 	//
@@ -82,21 +194,18 @@ void CommandConvert( string command , string filename )
 	child ytdl_shell( command , std_out > output );
 
 	string state , speed , eta , s_in ;
-	
+
 	while ( getline( output , s_in ) ) // get word from output to s_in
 	{
 
 		GetState( s_in , state , speed , eta );
 
-
-
-
 		cout << "                                                                                  ";
 		cout << "\r";
-		cout << " " << filename << ".wav" << setw( 16 ) 
-			  << state << setw( 15 ) 
-			  << speed << setw( 10 ) 
-			  << eta ;
+		cout << " " << filename << ".wav" << setw( 16 )
+			<< state << setw( 15 )
+			<< speed << setw( 10 )
+			<< eta ;
 		cout << "\r"; // back to line begin
 
 	}
@@ -104,29 +213,43 @@ void CommandConvert( string command , string filename )
 	state = "Finished";
 	cout << "                                                                                 ";
 	cout << "\r";
-	cout << " " << filename << ".wav" << setw( 16 ) 
-		  << state << setw( 15 ) 
-		  << speed << setw( 10 ) 
-		  << eta ;
+	cout << " " << filename << ".wav" << setw( 16 )
+		<< state << setw( 15 )
+		<< speed << setw( 10 )
+		<< eta ;
 
 }
+
 
 
 int main()
 {
 
 	int mod ;
-	string filename , url , command_final , txt_name ;
+	string filename , url , command_final , txt_name , xtdl , youtube_dl , ffmpeg ;
 	stringstream command;
 	vector<thread> download;
+	//
+	Update update_1 ;
 
 
-//
+
+
+	//
 Start:
 
 	system( "cls" );
-	cout << " Xtdl  ver 1.0.0" << endl ;
-	cout << endl << " (1) Single download     (2) Reading from txt  : ";
+
+
+	update_1.GetVersion() ;
+
+
+	cout << endl << " (1) Single download "
+		<< endl << " (2) Reading from txt "
+		<< endl << " (3) Update youtube-dl "
+		<< endl
+		<< endl << " Choose the number : " ;
+
 	cin >> mod;
 	cout << endl;
 
@@ -136,11 +259,14 @@ Start:
 		goto SingleDownload ;
 	case 2:
 		goto ReadFromTxt ;
+	case 3:
+		update_1.UpdateYoutube_dl() ;
+		goto Start ;
 	default:
 		goto Start ;
 	}
 
-//
+	//
 SingleDownload:
 
 	system( "cls" );
@@ -149,8 +275,8 @@ SingleDownload:
 	command_final = "";
 	command.str( "" );
 	command.clear();
-	
-	
+
+
 	cout << endl << " URL: ";
 	cin >> url;
 	cout << endl;
@@ -159,15 +285,15 @@ SingleDownload:
 	cin.ignore( 10000 , '\n' ); // clean buffer
 	getline( cin , filename );
 	cout << endl;
-	
+
 	// splice command
 	command << "youtube-dl  --newline  -f  bestaudio  --extract-audio  --audio-format wav  --audio-quality 0  -o  \""
-			<< filename 
-			<< ".%(ext)s\"  "
-			<< url;
+		<< filename
+		<< ".%(ext)s\"  "
+		<< url;
 	getline( command , command_final );
 
-	download.push_back( thread( CommandConvert , command_final , filename ) ) ;
+	download.push_back( thread( CommandConvert , command_final , filename ) ) ; // create a thread for CommandConvert
 	download[download.size() - 1].join() ;
 
 	cout << endl << endl ;
@@ -175,7 +301,7 @@ SingleDownload:
 
 	goto SingleDownload ;
 
-//
+	//
 ReadFromTxt:
 
 	system( "cls" );
@@ -184,7 +310,7 @@ ReadFromTxt:
 	command_final = "";
 	command.str( "" );
 	command.clear();
-	
+
 
 
 
