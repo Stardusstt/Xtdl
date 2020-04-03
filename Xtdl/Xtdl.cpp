@@ -110,10 +110,9 @@ public:
 	void GetState( string s_in );
 	void CommandConvert( string command_in , string filename_in );
 
-	string state , speed , eta ;
-
 private:
 
+	string state , speed , eta ;
 	string input ;
 
 };
