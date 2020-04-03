@@ -112,9 +112,8 @@ public:
 
 private:
 
-	string state , speed , eta ;
-	string input ;
-
+	string state , speed , eta , input ;
+	
 };
 
 Converter::Converter()
