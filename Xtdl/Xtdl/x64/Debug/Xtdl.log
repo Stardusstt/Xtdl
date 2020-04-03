@@ -1,0 +1,42 @@
+﻿  Converter.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\detail\windows\handles.hpp(42,33): warning C4267: '引數': 將 'size_t' 轉換為 'boost::winapi::ULONG_'，資料可能遺失
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(280,21): warning C4244: '引數': 將 'ptrdiff_t' 轉換為 'int'，由於類型不同，可能導致資料遺失
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(261): message : 編譯 類別 樣板 成員函式 'bool boost::process::basic_pipebuf<char,std::char_traits<char>>::_write_impl(void)' 期間
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(189): message : 請參考正在進行編譯的函式 樣板 具現化 'bool boost::process::basic_pipebuf<char,std::char_traits<char>>::_write_impl(void)'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(298): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::basic_pipebuf<char,std::char_traits<char>>'
+D:\stardusstt\documents\C++\Xtdl\Xtdl\Converter.cpp(77): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::basic_ipstream<char,std::char_traits<char>>'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\io.hpp(548): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::detail::std_out_<2,-1>'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\io.hpp(544): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::detail::std_out_<1,-1>'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\io.hpp(412): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::detail::std_in_<void>'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(632): message : 請參考正在進行編譯的 類別 樣板 具現化 'std::chrono::duration<double,std::ratio<1,1>>'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(178): message : 請參考正在進行編譯的 類別 樣板 具現化 'std::chrono::duration<__int64,std::nano>'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(610): message : 請參考正在進行編譯的 類別 樣板 具現化 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>'
+  Update.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\detail\windows\handles.hpp(42,33): warning C4267: '引數': 將 'size_t' 轉換為 'boost::winapi::ULONG_'，資料可能遺失
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(280,21): warning C4244: '引數': 將 'ptrdiff_t' 轉換為 'int'，由於類型不同，可能導致資料遺失
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(261): message : 編譯 類別 樣板 成員函式 'bool boost::process::basic_pipebuf<char,std::char_traits<char>>::_write_impl(void)' 期間
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(189): message : 請參考正在進行編譯的函式 樣板 具現化 'bool boost::process::basic_pipebuf<char,std::char_traits<char>>::_write_impl(void)'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\pipe.hpp(298): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::basic_pipebuf<char,std::char_traits<char>>'
+D:\stardusstt\documents\C++\Xtdl\Xtdl\Update.cpp(23): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::basic_ipstream<char,std::char_traits<char>>'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\io.hpp(548): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::detail::std_out_<2,-1>'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\io.hpp(544): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::detail::std_out_<1,-1>'
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\io.hpp(412): message : 請參考正在進行編譯的 類別 樣板 具現化 'boost::process::detail::std_in_<void>'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(632): message : 請參考正在進行編譯的 類別 樣板 具現化 'std::chrono::duration<double,std::ratio<1,1>>'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(178): message : 請參考正在進行編譯的 類別 樣板 具現化 'std::chrono::duration<__int64,std::nano>'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(610): message : 請參考正在進行編譯的 類別 樣板 具現化 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>'
+  Xtdl.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+c:\tools\vcpkg\installed\x64-windows\include\boost\process\detail\windows\handles.hpp(42,33): warning C4267: '引數': 將 'size_t' 轉換為 'boost::winapi::ULONG_'，資料可能遺失
+  正在產生程式碼...
+  Xtdl.vcxproj -> D:\stardusstt\documents\C++\Xtdl\x64\Debug\Xtdl.exe
