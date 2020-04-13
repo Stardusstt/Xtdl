@@ -147,11 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CLI.cpp" />
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="Update.cpp" />
     <ClCompile Include="Xtdl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CLI.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="Update.h" />
   </ItemGroup>

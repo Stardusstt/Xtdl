@@ -10,7 +10,7 @@ Converter::~Converter()
 {
 }
 
-void Converter::GetState( string s_in )
+void Converter::ConvertState( string s_in )
 {
 
 	input = s_in ;
@@ -68,41 +68,84 @@ void Converter::GetState( string s_in )
 
 }
 
-void Converter::CommandConvert( string command_in , string filename_in )
+string Converter::ConvertCommand
+( string filename_in , string url_in , string download_type , string format , string path )
 {
+	stringstream command_stream ;
+	string command_out;
 
-	using namespace boost::process ;
+	if ( download_type == "v+a" ) // video + audio
+	{
+		// 
+	}
 
-
-	ipstream output;
-	//
-	//boost::filesystem::path output = "output.txt";
-	//
-	child ytdl_shell( command_in , std_out > output );
-
-	string shell_string ;
-
-	while ( getline( output , shell_string ) ) // get word from output to shell_string
+	if ( download_type == "a" ) // audio only
 	{
 
-		GetState( shell_string );
+		if ( format == "original" )
+		{
 
-		cout << "                                                                                  ";
-		cout << "\r";
-		cout << " " << filename_in << ".wav" << setw( 16 )
-			<< state << setw( 15 )
-			<< speed << setw( 10 )
-			<< eta ;
-		cout << "\r"; // back to line begin
+			command_stream << "youtube-dl  --newline  --config-location ./youtube-dl.conf"
+				<< "  --format  bestaudio  --extract-audio"
+				<< "  --output \""
+				<< path << "/"
+				<< filename_in << ".%(ext)s\"  "
+				<< url_in ;
+
+			getline( command_stream , command_out );
+
+			return command_out ;
+
+		}
+
+		if ( format == "wav" )
+		{
+
+			command_stream << "youtube-dl  --newline  --config-location ./youtube-dl.conf"
+				<< "  --format  bestaudio  --extract-audio  --audio-format wav" // --audio-format wav
+				<< "  --output \""
+				<< path << "/"
+				<< filename_in << ".%(ext)s\"  "
+				<< url_in ;
+
+			getline( command_stream , command_out );
+
+			return command_out ;
+
+		}
 
 	}
 
-	state = "Finished";
-	cout << "                                                                                 ";
-	cout << "\r";
-	cout << " " << filename_in << ".wav" << setw( 16 )
-		<< state << setw( 15 )
-		<< speed << setw( 10 )
-		<< eta ;
+	return "download_type Error" ;
 
+}
+
+string Converter::get_state()
+{
+	return state ;
+}
+
+string Converter::get_speed()
+{
+	return speed ;
+}
+
+string Converter::get_eta()
+{
+	return eta ;
+}
+
+void Converter::set_state( string s_in )
+{
+	state = s_in ;
+}
+
+void Converter::set_speed( string s_in )
+{
+	speed = s_in ;
+}
+
+void Converter::set_eta( string s_in )
+{
+	eta = s_in ;
 }

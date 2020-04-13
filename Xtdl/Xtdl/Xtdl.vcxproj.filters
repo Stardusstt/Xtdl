@@ -24,12 +24,18 @@
     <ClCompile Include="Update.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="CLI.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Converter.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Update.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="CLI.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

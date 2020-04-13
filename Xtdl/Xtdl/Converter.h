@@ -3,8 +3,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <sstream>
 #include <vector>
-#include <iomanip>
 #include <regex>
 #include <boost/process.hpp>
 
@@ -18,8 +18,16 @@ public:
 	Converter();
 	~Converter();
 
-	void GetState( string s_in );
-	void CommandConvert( string command_in , string filename_in );
+	void ConvertState( string s_in );
+	string ConvertCommand
+	( string filename_in , string url_in , string download_type , string format , string path );
+
+	string get_state();
+	string get_speed();
+	string get_eta();
+	void set_state( string s_in );
+	void set_speed( string s_in );
+	void set_eta( string s_in );
 
 private:
 
