@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+
+#include "targetver.h"
 #include <boost/process.hpp>
 
 using namespace std ;

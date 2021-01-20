@@ -38,5 +38,8 @@
     <ClInclude Include="CLI.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -85,12 +85,13 @@ string Converter::ConvertCommand
 		if ( format == "original" )
 		{
 
-			command_stream << "youtube-dl  --newline  --config-location ./youtube-dl.conf"
-				<< "  --format  bestaudio  --extract-audio"
-				<< "  --output \""
-				<< path << "/"
-				<< filename_in << ".%(ext)s\"  "
-				<< url_in ;
+			command_stream << "youtube-dl  --newline"
+						   << "  --config-location ./youtube-dl.conf"
+						   << "  --format  bestaudio  --extract-audio"
+
+						   //  --output " PATH/name.%(ext)s "
+						   << "  --output \"" << path << "/" << filename_in << ".%(ext)s\" "
+						   << url_in ;
 
 			getline( command_stream , command_out );
 
@@ -101,12 +102,15 @@ string Converter::ConvertCommand
 		if ( format == "wav" )
 		{
 
-			command_stream << "youtube-dl  --newline  --config-location ./youtube-dl.conf"
-				<< "  --format  bestaudio  --extract-audio  --audio-format wav" // --audio-format wav
-				<< "  --output \""
-				<< path << "/"
-				<< filename_in << ".%(ext)s\"  "
-				<< url_in ;
+			command_stream << "youtube-dl  --newline"
+						   << "  --config-location ./youtube-dl.conf"
+
+						   // --audio-format wav
+						   << "  --format  bestaudio  --extract-audio  --audio-format wav"
+
+						   //  --output " PATH/name.%(ext)s "
+						   << "  --output \"" << path << "/" << filename_in << ".%(ext)s\" "
+						   << url_in ;
 
 			getline( command_stream , command_out );
 

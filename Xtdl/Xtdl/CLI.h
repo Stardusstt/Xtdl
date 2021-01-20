@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+
+#include "targetver.h"
 #include <boost/process.hpp>
 
 using namespace std ;
@@ -17,7 +19,7 @@ public:
 	CLI();
 	~CLI();
 
-	void OutConsole( string command_in , string filename_in );
+	void ConsoleOut( string command_in , string filename_in );
 
 private:
 

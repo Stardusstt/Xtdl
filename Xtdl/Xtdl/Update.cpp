@@ -20,7 +20,7 @@ void Update::UpdateYoutube_dl()
 	using namespace boost::process ;
 
 
-	ipstream output ;
+	ipstream output ; // create pipestream 
 
 	child youtube_dl_shell( "youtube-dl --update" , std_out > output );
 
@@ -28,9 +28,7 @@ void Update::UpdateYoutube_dl()
 
 	while ( getline( output , s_out ) ) // get word from output to s_out until eof
 	{
-
-		cout << s_out << endl ;
-
+		cout << endl << s_out << endl ;
 	}
 
 	cout << endl;
@@ -54,7 +52,7 @@ void Update::GetVersion()
 
 	child youtube_dl_shell( "youtube-dl --version" , std_out > output_youtube_dl );
 
-	getline( output_youtube_dl , youtube_dl_version );
+	getline( output_youtube_dl , youtube_dl_version ); // only get first line
 
 	cout << "youtube-dl : " << youtube_dl_version ;
 	cout << endl;
@@ -64,7 +62,7 @@ void Update::GetVersion()
 
 	child ffmpeg_shell( "ffmpeg -version" , std_out > output_ffmpeg );
 
-	getline( output_ffmpeg , ffmpeg_version );
+	getline( output_ffmpeg , ffmpeg_version ); // only get first line
 
 	cout << "ffmpeg : " << ffmpeg_version ;
 	cout << endl;

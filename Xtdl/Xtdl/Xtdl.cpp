@@ -3,7 +3,9 @@
 #include <string> 
 #include <vector>
 #include <thread>
+#include <limits>
 
+#include "targetver.h"
 #include "Update.h"
 #include "Converter.h"
 #include "CLI.h"
@@ -11,72 +13,37 @@
 using namespace std ;
 
 
-int main()
+enum class EMode
+{
+	// Enumeration for mode
+	// start from 1
+	SingleDownload = 1 , ReadTxt , Update
+};
+
+void SingleDownload()
 {
 
-	int mod ;
-	string url , filename , download_type , format , path , command_final , txt_name  ;
+	Converter converter ;
+	CLI cli ;
 	vector<thread> download;
-	Update update_1 ;
-	Converter converter_1 ;
-	CLI cli_1 ;
+	string url , filename , download_type , format , path , command_final ;
 
-
-	//
-Start:
 
 	system( "cls" );
-
-
-	update_1.GetVersion() ;
-
-
-	cout << endl << " (1) Single download "
-		 << endl << " (2) Reading from txt "
-		 << endl << " (3) Update youtube-dl "
-		 << endl
-		 << endl << " Choose the number : " ;
-
-	cin >> mod;
-	cout << endl;
-
-	switch ( mod )
-	{
-	case 1:
-		goto SingleDownload ;
-		break ;
-	case 2:
-		goto ReadFromTxt ;
-		break ;
-	case 3:
-		update_1.UpdateYoutube_dl() ;
-		goto Start ;
-		break ;
-	default:
-		goto Start ;
-		break ;
-	}
-
-	//
-SingleDownload:
-
-	system( "cls" );
-	url = "";
-	filename = "";
-	download_type = "";
-	format = "";
-	path = "";
-	command_final = "";
-
 
 	// URL
 	cout << endl << " URL: ";
 	cin >> url ;
+
+	// discards max() amount of characters until finds a delimiter
+	// ( ignore() also discards the delimiter if it finds it )
+	// prevent getline() skip input
+	cin.ignore( std::numeric_limits<std::streamsize>::max() , '\n' );
+
 	cout << endl;
 
 	// Name
 	cout << endl << " Name: ";
-	cin.ignore( 10000 , '\n' ); // clean buffer
 	getline( cin , filename );
 	cout << endl;
 
@@ -85,6 +52,7 @@ SingleDownload:
 		<< endl << " (a)	Audio Only "
 		<< endl << " Download Type : " ;
 	cin >> download_type ;
+	cin.ignore( std::numeric_limits<std::streamsize>::max() , '\n' );
 	cout << endl;
 
 	// Format
@@ -92,48 +60,80 @@ SingleDownload:
 		<< endl << " (wav)		 WAV "
 		<< endl << " Format : " ;
 	cin >> format ;
+	cin.ignore( std::numeric_limits<std::streamsize>::max() , '\n' );
 	cout << endl;
 
 	// Path
 	cout << endl << " Path: ";
-	cin.ignore( 10000 , '\n' ); // clean buffer
 	getline( cin , path );
 	cout << endl;
 
-	command_final = converter_1.ConvertCommand( filename , url , download_type , format , path ) ;
+	// Convert Command
+	command_final = converter.ConvertCommand( filename , url , download_type , format , path ) ;
 
-	// create a thread for OutConsole
-	download.emplace_back( thread( &CLI::OutConsole , &cli_1 , command_final , filename ) ) ;
+	// create a thread for CLI::ConsoleOut
+	download.emplace_back( thread( &CLI::ConsoleOut , &cli , command_final , filename ) ) ;
 	download[download.size() - 1].join() ;
 
 	cout << endl << endl ;
 	system( "pause" );
 
-	goto SingleDownload ;
+}
 
-	//
-ReadFromTxt:
+void ChooseMode( EMode eMode )
+{
 
-	system( "cls" );
-	url = "";
-	filename = "";
-	command_final = "";
+	Update update;
+
+	switch ( eMode )
+	{
+	case EMode::SingleDownload:
+		SingleDownload(); // run SingleDownload
+		break ;
+	case EMode::ReadTxt:
+		//
+		cout << "ReadTxt";
+		system( "pause" );
+		break ;
+	case EMode::Update:
+		update.UpdateYoutube_dl(); // run UpdateYoutube_dl
+		break ;
+	default:
+		//
+		cout << "default";
+		system( "pause" );
+		break ;
+	}
+
+}
+
+int main()
+{
+
+	EMode eMode;
+	Update update ;
+	int mode ;
 
 
+	while ( 1 )
+	{
 
+		system( "cls" );
 
+		update.GetVersion() ;
 
+		cout << endl << " (1) Single download "
+			<< endl << " (2) Reading from txt "
+			<< endl << " (3) Update youtube-dl "
+			<< endl
+			<< endl << " Choose the number : " ;
+		cin >> mode;
 
+		eMode = static_cast<EMode>( mode ); // int to enum 
 
+		ChooseMode( eMode );
 
-
-
-
-
-
-
-
-	goto ReadFromTxt ;
+	}
 
 }
 

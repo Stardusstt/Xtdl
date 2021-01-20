@@ -6,6 +6,8 @@
 #include <sstream>
 #include <vector>
 #include <regex>
+
+#include "targetver.h"
 #include <boost/process.hpp>
 
 using namespace std ;
