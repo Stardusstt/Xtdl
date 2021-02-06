@@ -20,15 +20,15 @@ void Update::UpdateYoutube_dl()
 	using namespace boost::process ;
 
 
-	ipstream output ; // create pipestream 
+	ipstream temp ; // create pipestream 
+	string cli_string ;
 
-	child youtube_dl_shell( "youtube-dl --update" , std_out > output );
 
-	string s_out ;
+	child youtube_dl_shell( "youtube-dl --update" , std_out > temp );
 
-	while ( getline( output , s_out ) ) // get word from output to s_out until eof
+	while ( getline( temp , cli_string ) ) // get word from temp to cli_string until eof
 	{
-		cout << endl << s_out << endl ;
+		cout << endl << cli_string << endl ;
 	}
 
 	cout << endl;

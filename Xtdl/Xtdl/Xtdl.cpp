@@ -37,7 +37,7 @@ void SingleDownload()
 
 	// discards max() amount of characters until finds a delimiter
 	// ( ignore() also discards the delimiter if it finds it )
-	// prevent getline() skip input
+	// prevent getline() skip input_
 	cin.ignore( std::numeric_limits<std::streamsize>::max() , '\n' );
 
 	cout << endl;
@@ -49,16 +49,16 @@ void SingleDownload()
 
 	// Download Type
 	cout << endl << " (v+a) Video + Audio "
-		<< endl << " (a)	Audio Only "
-		<< endl << " Download Type : " ;
+		 << endl << " (a)	Audio Only "
+		 << endl << " Download Type : " ;
 	cin >> download_type ;
 	cin.ignore( std::numeric_limits<std::streamsize>::max() , '\n' );
 	cout << endl;
 
 	// Format
 	cout << endl << " (original) Original "
-		<< endl << " (wav)		 WAV "
-		<< endl << " Format : " ;
+		 << endl << " (wav)		 WAV "
+		 << endl << " Format : " ;
 	cin >> format ;
 	cin.ignore( std::numeric_limits<std::streamsize>::max() , '\n' );
 	cout << endl;
@@ -123,10 +123,10 @@ int main()
 		update.GetVersion() ;
 
 		cout << endl << " (1) Single download "
-			<< endl << " (2) Reading from txt "
-			<< endl << " (3) Update youtube-dl "
-			<< endl
-			<< endl << " Choose the number : " ;
+			 << endl << " (2) Reading from txt "
+			 << endl << " (3) Update youtube-dl "
+			 << endl
+			 << endl << " Choose the number : " ;
 		cin >> mode;
 
 		eMode = static_cast<EMode>( mode ); // int to enum 

@@ -20,20 +20,19 @@ public:
 	Converter();
 	~Converter();
 
-	void ConvertState( string s_in );
+	void ConvertState( string input );
 	string ConvertCommand
-	( string filename_in , string url_in , string download_type , string format , string path );
-
-	string get_state();
-	string get_speed();
-	string get_eta();
-	void set_state( string s_in );
-	void set_speed( string s_in );
-	void set_eta( string s_in );
+	( string filename , string url , string download_type , string format , string path );
+	string state() const;
+	string speed() const;
+	string eta() const;
+	void state( string state );
+	void speed( string speed );
+	void eta( string eta );
 
 private:
 
-	string state , speed , eta , input ;
+	string state_ , speed_ , eta_ ;
 
 };
 

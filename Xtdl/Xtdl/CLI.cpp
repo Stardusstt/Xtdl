@@ -11,43 +11,40 @@ CLI::~CLI()
 {
 }
 
-void CLI::ConsoleOut( string command_in , string filename_in )
+void CLI::ConsoleOut( string command , string filename )
 {
 
 	using namespace boost::process ;
 
 
 	Converter converter ;
+	ipstream temp ;
+	string cli_string ;
+	
 
-	ipstream output;
-	//
-	//boost::filesystem::path output = "output.txt";
-	//
-	boost::process::child ytdl_shell( command_in , std_out > output );
+	child ytdl_shell( command , std_out > temp );
 
-	string shell_string ;
-
-	while ( getline( output , shell_string ) ) // get word from output to shell_string
+	while ( getline( temp , cli_string ) ) // get word from temp to cli_string until eof
 	{
 
-		converter.ConvertState( shell_string );
+		converter.ConvertState( cli_string );
 
-		cout << "                                                                                  ";
+		cout << "                                                                           ";
 		cout << "\r";
-		cout << " " << filename_in << ".wav" << setw( 16 )
-			<< converter.get_state() << setw( 15 )
-			<< converter.get_speed() << setw( 10 )
-			<< converter.get_eta() ;
+		cout << " " << filename << setw( 15 )
+			 << converter.state() << setw( 15 )
+			 << converter.speed() << setw( 10 )
+			 << converter.eta() ;
 		cout << "\r"; // back to line begin
 
 	}
 
-	converter.set_state( "Finished" );
-	cout << "                                                                                 ";
+	converter.state( "Finished" );
+	cout << "                                                                           ";
 	cout << "\r";
-	cout << " " << filename_in << ".wav" << setw( 16 )
-		<< converter.get_state() << setw( 15 )
-		<< converter.get_speed() << setw( 10 )
-		<< converter.get_eta() ;
-
+	cout << " " << filename << setw( 15 )
+		 << converter.state() << setw( 15 )
+		 << converter.speed() << setw( 10 )
+		 << converter.eta() ;
+	
 }

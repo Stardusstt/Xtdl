@@ -10,66 +10,91 @@ Converter::~Converter()
 {
 }
 
-void Converter::ConvertState( string s_in )
+void Converter::ConvertState( string input )
 {
 
-	input = s_in ;
-
 	smatch result;
-	regex regex_youtube( "youtube" );
-	regex regex_download( "download" );
-	regex regex_state( "\\d+\\.?\\d\\%" );
-	regex regex_speed( "\\d+\\.\\w+\\/." );
-	regex regex_eta( "(ETA).(\\d+:\\d+)" );
-	regex regex_ffmpeg( "ffmpeg" );
-	regex regex_deleting( "Deleting" );
-
-
-	// begin
-	if ( regex_search( input , result , regex_youtube ) )
+	
+	//
+	// [youtube] 7kmY6QOFMGg: Downloading webpage
+	// 
+	regex regex_youtube( "youtube" ); // match "youtube"
+	if ( regex_search( input , regex_youtube ) )
 	{
-		state = input;
+
+		regex regex_youtube_state( ":(.*)" ); // match " Downloading webpage" after ":"
+		if ( regex_search( input , result , regex_youtube_state ) )
+		{
+			state_ = result[1] ; // Group 1.
+		}
+		
+		return ;
+
 	}
-
-	if ( regex_search( input , result , regex_download ) )
+	
+	//
+	// [download] Destination: Location\filename.m4a
+	// [download]  16.5% of 6.05MiB at  1.33MiB/s ETA 00:03
+	// [download] 100% of 6.05MiB in 00:02
+	//
+	regex regex_download( "download" ); // match "download"
+	if ( regex_search( input , regex_download ) )
 	{
 
+		regex regex_state( "\\d+\\.?\\d\\%" ); //  / \d+\.?\d\% /  match "16.5%"
 		if ( regex_search( input , result , regex_state ) )
 		{
-			state = result[0];
+			state_ = result[0]; // Full match
 		}
 
+		regex regex_speed( "\\d+\\.\\w+\\/." ); //  / \d+\.\w+\/. /  match "1.33MiB/s"
 		if ( regex_search( input , result , regex_speed ) )
 		{
-			speed = result[0];
+			speed_ = result[0]; // Full match
 		}
 
+		regex regex_eta( "ETA.(\\d+:\\d+)" ); //  / ETA.(\d+:\d+) /  match "00:03"
 		if ( regex_search( input , result , regex_eta ) )
 		{
-			state = result[2];
+			eta_ = result[1]; // Group 1.
 		}
+		
+		return ;
 
 	}
 
-	if ( regex_search( input , result , regex_ffmpeg ) )
+	//
+	// [ffmpeg] Destination: Location\filename.wav
+	//
+	regex regex_ffmpeg( "ffmpeg" ); // match "ffmpeg"
+	if ( regex_search( input , regex_ffmpeg ) )
 	{
-		state = "Converting";
-		speed = "";
-		eta = "";
+		state_ = "Converting";
+		speed_ = "";
+		eta_ = "";
+
+		return ;
+
 	}
 
-	if ( regex_search( input , result , regex_deleting ) )
+	//
+	// Deleting original file Location\filename.m4a (pass -k to keep)
+	//
+	regex regex_deleting( "Deleting" ); // match "Deleting"
+	if ( regex_search( input , regex_deleting ) )
 	{
-		state = "Deleting temp";
-		speed = "";
-		eta = "";
-	}
-	// end
+		state_ = "Cleaning Temp Files";
+		speed_ = "";
+		eta_ = "";
 
+		return ;
+
+	}
+	
 }
 
 string Converter::ConvertCommand
-( string filename_in , string url_in , string download_type , string format , string path )
+( string filename , string url , string download_type , string format , string path )
 {
 	stringstream command_stream ;
 	string command_out;
@@ -90,13 +115,12 @@ string Converter::ConvertCommand
 						   << "  --format  bestaudio  --extract-audio"
 
 						   //  --output " PATH/name.%(ext)s "
-						   << "  --output \"" << path << "/" << filename_in << ".%(ext)s\" "
-						   << url_in ;
+						   << "  --output \"" << path << "/" << filename << ".%(ext)s\" "
+						   << url ;
 
 			getline( command_stream , command_out );
 
 			return command_out ;
-
 		}
 
 		if ( format == "wav" )
@@ -109,13 +133,12 @@ string Converter::ConvertCommand
 						   << "  --format  bestaudio  --extract-audio  --audio-format wav"
 
 						   //  --output " PATH/name.%(ext)s "
-						   << "  --output \"" << path << "/" << filename_in << ".%(ext)s\" "
-						   << url_in ;
+						   << "  --output \"" << path << "/" << filename << ".%(ext)s\" "
+						   << url ;
 
 			getline( command_stream , command_out );
 
 			return command_out ;
-
 		}
 
 	}
@@ -124,32 +147,32 @@ string Converter::ConvertCommand
 
 }
 
-string Converter::get_state()
+string Converter::state() const
 {
-	return state ;
+	return state_ ;
 }
 
-string Converter::get_speed()
+string Converter::speed() const
 {
-	return speed ;
+	return speed_ ;
 }
 
-string Converter::get_eta()
+string Converter::eta() const
 {
-	return eta ;
+	return eta_ ;
 }
 
-void Converter::set_state( string s_in )
+void Converter::state( string state )
 {
-	state = s_in ;
+	state_ = std::move( state );
 }
 
-void Converter::set_speed( string s_in )
+void Converter::speed( string speed )
 {
-	speed = s_in ;
+	speed_ = std::move( speed );
 }
 
-void Converter::set_eta( string s_in )
+void Converter::eta( string eta )
 {
-	eta = s_in ;
+	eta_ = std::move( eta );
 }

@@ -19,7 +19,7 @@ public:
 	CLI();
 	~CLI();
 
-	void ConsoleOut( string command_in , string filename_in );
+	void ConsoleOut( string command , string filename );
 
 private:
 
