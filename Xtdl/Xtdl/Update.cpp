@@ -42,7 +42,7 @@ void Update::GetVersion()
 	using namespace boost::process ;
 
 	//  xtdl
-	xtdl_version = "2020.4.13" ;
+	xtdl_version = "2021.2.7" ;
 
 	cout << "Xtdl : " << xtdl_version ;
 	cout << endl;

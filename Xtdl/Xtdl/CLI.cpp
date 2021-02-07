@@ -30,12 +30,12 @@ void CLI::ConsoleOut( string command , string filename )
 		converter.ConvertState( cli_string );
 
 		cout << "                                                                           ";
-		cout << "\r";
+		cout << "\r"; // back to line begin
 		cout << " " << filename << setw( 15 )
 			 << converter.state() << setw( 15 )
 			 << converter.speed() << setw( 10 )
 			 << converter.eta() ;
-		cout << "\r"; // back to line begin
+		cout << "\r"; 
 
 	}
 

@@ -41,19 +41,19 @@ void Converter::ConvertState( string input )
 	if ( regex_search( input , regex_download ) )
 	{
 
-		regex regex_state( "\\d+\\.?\\d\\%" ); //  / \d+\.?\d\% /  match "16.5%"
+		regex regex_state( "\\d.*%" ); //  / \d.*% /  match "16.5%"
 		if ( regex_search( input , result , regex_state ) )
 		{
 			state_ = result[0]; // Full match
 		}
 
-		regex regex_speed( "\\d+\\.\\w+\\/." ); //  / \d+\.\w+\/. /  match "1.33MiB/s"
+		regex regex_speed( "at +(.*s)" ); //  / at +(.*s) /  match "1.33MiB/s"
 		if ( regex_search( input , result , regex_speed ) )
 		{
-			speed_ = result[0]; // Full match
+			speed_ = result[1]; // Group 1.
 		}
 
-		regex regex_eta( "ETA.(\\d+:\\d+)" ); //  / ETA.(\d+:\d+) /  match "00:03"
+		regex regex_eta( "ETA (.*\\d)" ); //  / ETA (.*\d) /  match "00:03"
 		if ( regex_search( input , result , regex_eta ) )
 		{
 			eta_ = result[1]; // Group 1.
